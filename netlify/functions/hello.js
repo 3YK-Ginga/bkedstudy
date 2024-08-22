@@ -1,11 +1,11 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+const model = genAI.getGenerativeModel({model: "gemini-1.5-flash", generationConfig: {responseMimeType: "application/json"}});
 
 const handler = async (event) => {
   try {
-    const prompt = "Write a story about an AI and magic";
+    const prompt = "３日間の大阪旅行プランを作って下さい。考えてほしいのは観光場所、食事場所、宿泊場所の３つです。ただし、出力は'itinerary': [{'day': 1,'date': '2024-09-10','activities': [{'time': '12:00','activity': '博多ラーメンを食べる','id': 'Google Place ID'}]}]というようにしてください。";
     
     // コンテンツを生成する
     const result = await model.generateContent(prompt);
