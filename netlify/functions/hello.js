@@ -7,7 +7,7 @@ const handler = async (event) => {
     
     return {
       statusCode: 200,
-      body: JSON.stringify(response.data),
+      body: process.env.GEMINI_API_KEY,
     };
   } catch (error) {
     // エラーがHTTPレスポンスに関連する場合
