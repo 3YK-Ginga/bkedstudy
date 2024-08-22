@@ -4,6 +4,7 @@
   "description": "Minimal sample for Netlify Functions.",
   "main": "index.js",
   "scripts": {
+    "build": "echo 'No build step defined'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
