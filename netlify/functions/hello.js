@@ -8,10 +8,12 @@ const handler = async (event) => {
     const prompt = "Write a story about an AI and magic";
     
     // コンテンツを生成する
-    const result = await model.generateContent({ prompt });
+    const result = await model.generateContent(prompt);
+    
+    const response = await result.response;
     
     // 生成されたテキストを取得
-    const text = result.content;  // APIドキュメントに基づいてこの部分を確認する必要あり
+    const text = response.text();  // APIドキュメントに基づいてこの部分を確認する必要あり
     
     return {
       statusCode: 200,
