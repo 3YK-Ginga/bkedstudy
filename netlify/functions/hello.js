@@ -1,35 +1,24 @@
-const axios = require('axios');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
+
+const genAI = new GoogleGenerativeAI({ apiKey: process.env.GEMINI_API_KEY });
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 const handler = async (event) => {
   try {
-    const apiUrl = 'https://www.jalan.net/activity/json/arealist.json';
-    const response = await axios.get(apiUrl);
+    const prompt = "Write a story about an AI and magic";
     
-    const prompt = "Write a story about an AI and magic"
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
+    // コンテンツを生成する
+    const result = await model.generateContent({ prompt });
+    
+    // 生成されたテキストを取得
+    const text = result.content;  // APIドキュメントに基づいてこの部分を確認する必要あり
     
     return {
       statusCode: 200,
-      body: text,
+      body: JSON.stringify({ message: text }),
     };
   } catch (error) {
-    // エラーがHTTPレスポンスに関連する場合
-    if (error.response) {
-      return {
-        statusCode: error.response.status,
-        body: JSON.stringify({ 
-          message: error.response.statusText, 
-          data: error.response.data 
-        }),
-      };
-    }
-    
-    // その他のエラー
+    // エラーハンドリング
     return {
       statusCode: 500,
       body: JSON.stringify({ message: error.message }),
