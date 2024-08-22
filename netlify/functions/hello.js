@@ -21,7 +21,7 @@ const handler = async (event) => {
     // エラーハンドリング
     return {
       statusCode: 500,
-      body: JSON.stringify({ message: error.message }),
+      body: process.env.API_KEY,
     };
   }
 };
