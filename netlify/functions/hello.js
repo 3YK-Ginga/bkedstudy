@@ -5,7 +5,22 @@ const model = genAI.getGenerativeModel({model: "gemini-1.5-flash", generationCon
 
 const handler = async (event) => {
   try {
-    const prompt = "３日間の大阪旅行プランを作って下さい。考えてほしいのは観光場所、食事場所、宿泊場所の３つです。ただし、出力は'itinerary': [{'day': 1,'date': '2024-09-10','activities': [{'time': '12:00','activity': '博多ラーメンを食べる','query': '博多+博多ラーメン'}]}]というようにしてください。";
+    const prompt = 
+`出発地:[福島県],目的地:[北海道],期間:[2024-08-29~2024-09-01],人数:[5],旅のオーダー:[色々な料理を食べたいです]を基に、訪問場所、食事場所、宿泊場所の3つを含む旅行プランを提案してください。出力は以下の形式にしてください。また、queryはあくまで一例です。
+'itinerary': [
+  {
+    'day': 1,
+    'date': 'YYYY-MM-DD',
+    'activities': [
+      {
+        'time': 'HH:MM',
+        'activity': '活動内容',
+        'query': '検索クエリ（例: 場所+料理名）'
+      }
+    ]
+  }
+  ...
+]`;
     
     // コンテンツを生成する
     const result = await model.generateContent(prompt);
