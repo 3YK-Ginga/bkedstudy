@@ -5,7 +5,7 @@ const model = genAI.getGenerativeModel({model: "gemini-1.5-flash", generationCon
 
 const handler = async (event) => {
   try {
-    const prompt = "３日間の大阪旅行プランを作って下さい。考えてほしいのは観光場所、食事場所、宿泊場所の３つです。ただし、出力は'itinerary': [{'day': 1,'date': '2024-09-10','activities': [{'time': '12:00','activity': '博多ラーメンを食べる','id': 'Google Place ID'}]}]というようにしてください。";
+    const prompt = "３日間の大阪旅行プランを作って下さい。考えてほしいのは観光場所、食事場所、宿泊場所の３つです。ただし、出力は'itinerary': [{'day': 1,'date': '2024-09-10','activities': [{'time': '12:00','activity': '博多ラーメンを食べる','query': '博多+博多ラーメン'}]}]というようにしてください。";
     
     // コンテンツを生成する
     const result = await model.generateContent(prompt);
@@ -17,7 +17,7 @@ const handler = async (event) => {
     
     return {
       statusCode: 200,
-      body: JSON.stringify({ message: text }),
+      body: text,
     };
   } catch (error) {
     // エラーハンドリング
