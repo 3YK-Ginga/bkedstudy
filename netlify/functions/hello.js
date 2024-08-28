@@ -33,9 +33,11 @@ const handler = async (event) => {
     
     const jsonObject = JSON.parse(text);
     
+    const prettystr = JSON.stringify(jsonObject, null, 2);
+    
     return {
       statusCode: 200,
-      body: jsonObject,
+      body: prettystr,
     };
   } catch (error) {
     // エラーハンドリング
