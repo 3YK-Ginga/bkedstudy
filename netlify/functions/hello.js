@@ -6,7 +6,8 @@ const model = genAI.getGenerativeModel({model: "gemini-1.5-flash", generationCon
 const handler = async (event) => {
   try {
     const prompt = 
-`出発地:[福島県],目的地:[北海道],期間:[2024-08-29~2024-09-01],人数:[5],旅のオーダー:[１日目は釣りに行きたいです。できれば安いところ]を基に、訪問場所、食事場所、宿泊場所の3つを含む旅行プランを提案してください。出力は以下の形式にしてください。また、queryはあくまで一例です。
+`出発地:[福島県],目的地:[北海道],期間:[2024-08-29~2024-09-01],人数:[5],旅のオーダー:[５人とも大学生です。若者が楽しめる場所に行きたい]を基に、移動アクティビティを除く旅行プランを提案してください。
+出力条件:出力は以下の形式にしてください。
 'itinerary': [
   {
     'day': 1,
@@ -15,7 +16,7 @@ const handler = async (event) => {
       {
         'time': 'HH:MM',
         'activity': '活動内容',
-        'query': '検索クエリ（例: 場所+料理名）'
+        'query': '地域・拠点情報名称およびカテゴリー名称(「+」区切りで複数指定可能)'
       }
     ]
   }
@@ -27,12 +28,14 @@ const handler = async (event) => {
     
     const response = await result.response;
     
-    // 生成されたテキストを取得
-    const text = response.text();  // APIドキュメントに基づいてこの部分を確認する必要あり
+    // 生成されたコンテンツを取得
+    const text = response.text();
+    
+    const jsonObject = JSON.parse(text);
     
     return {
       statusCode: 200,
-      body: text,
+      body: jsonObject,
     };
   } catch (error) {
     // エラーハンドリング
